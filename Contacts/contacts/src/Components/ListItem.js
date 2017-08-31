@@ -1,6 +1,6 @@
 import React from 'react';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import {ContactForm} from '../Components/ContactForm';
+import {ContactForm} from '../Containers/ContactForm';
 
 
 export const ListItem = (props) => {
@@ -24,7 +24,7 @@ export const ListItem = (props) => {
               {
                   props.isShowingUpdateModal &&
                   <ContactForm isShowingModal={props.isShowingUpdateModal} action="Update" onCloseDiv={props.handleUpdateClose} 
-                    handleOnClick={update}/>
+                    handleOnClick={update} itemName={props.item.name} itemNumber={props.item.number}/>
               }
             <button onClick={deleteitem}>Delete</button>
           </ModalDialog>
