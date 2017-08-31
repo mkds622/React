@@ -1,0 +1,84 @@
+.App {
+  text-align: center;
+  justify-content: center;
+}
+
+.Wrapper{
+  box-sizing: border-box;
+  background-size:cover;
+  align-items: center;
+  justify-content: center;
+  font-family: Futura,"Trebuchet MS",Arial,sans-serif;
+  padding : 20px;
+  max-width: 350px;
+  background: rgba(255,255,255, 0.95);
+  box-shadow: 0 0 0 10px rgba(0,0,0,0.1);
+}
+*, *:before, *:after {box-sizing: inherit; }
+
+.App-header {
+  background-color: #222;
+  height: 75px;
+  padding: 10px;
+  color: #031AC4;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+
+h2 {
+  text-align: center;
+  margin: 0;
+  font-weight: 200;
+}
+
+.Plates {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  list-style: none;
+}
+
+.Plates li {
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  padding: 10px 0;
+  font-weight: 100;
+  display: flex;
+}
+
+.Plates label {
+  flex:1;
+  cursor: pointer;
+
+}
+
+.Plates input {
+  display: none;
+}
+
+.Plates input + label:before {
+  content: '⬜️';
+  margin-right: 10px;
+}
+
+.Plates input:checked + label:before {
+  content: '🌮';
+}
+
+.Add-items {
+  margin-top: 20px;
+}
+
+.Add-items input {
+  padding:10px;
+  outline:0;
+  border:1px solid rgba(0,0,0,0.1);
+}
