@@ -19,8 +19,9 @@
 .App-header {
   background-color: #222;
   height: 75px;
-  padding: 10px;
+  padding: 20px;
   color: #031AC4;
+  font-size: 20px;
 }
 
 .App-intro {
@@ -81,4 +82,9 @@ h2 {
   padding:10px;
   outline:0;
   border:1px solid rgba(0,0,0,0.1);
+}
+
+.listSegment{
+  width: 400px;
+
 }

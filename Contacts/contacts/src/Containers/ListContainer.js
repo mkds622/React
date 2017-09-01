@@ -1,6 +1,6 @@
 import React from 'react';
 //import ReactDOM from 'react-dom';
-//import {List} from '../Components/List';
+import {List,SegmentGroup} from 'semantic-ui-react';
 import {ListItemContainer} from '../Containers/ListItemContainer';
 
 export class ListContainer extends React.Component {
@@ -14,7 +14,14 @@ export class ListContainer extends React.Component {
         this.deleteItem = this.deleteItem.bind(this);
     }
     createList(contactsToDisplay){
-        return contactsToDisplay.map((item,i) => <ListItemContainer key={i} index={i} update ={this.updateItem} delete={this.deleteItem} item={item} />);
+        return (
+            <SegmentGroup className='listSegment' divided inverted>
+               
+            {contactsToDisplay.map((item,i) => <ListItemContainer key={i} index={i} update ={this.updateItem} delete={this.deleteItem} item={item} />)}
+                
+            </SegmentGroup>
+        );
+        
     }
 
     updateItem(i,item,newItem){
@@ -46,10 +53,10 @@ export class ListContainer extends React.Component {
                 contactsToDisplay.splice(i,1);
                 console.log(contactsToDisplay);
                 i=index;
+                allContacts.splice(i,1);
                 return;
             }
         }, this);
-        allContacts.splice(i,1);
         console.log(contactsToDisplay);
         localStorage.setItem('Contacts',JSON.stringify(allContacts));
         this.setState({
@@ -57,7 +64,7 @@ export class ListContainer extends React.Component {
         });
     }
     render(){
-    return (<ul>{this.createList(this.props.contactsToDisplay)}</ul>);
+    return (<div style={{padding: "20px 0px" }}>{this.createList(this.props.contactsToDisplay)}</div>);
     }
     
 }

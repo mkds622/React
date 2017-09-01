@@ -1,5 +1,6 @@
 import React from 'react';
-import {ContactForm} from '../Containers/ContactForm';
+import {ContactFormContainer} from '../Containers/ContactFormContainer';
+import {Button,Input} from 'semantic-ui-react';
 
 
 export const Form = (props) =>{
@@ -8,15 +9,9 @@ export const Form = (props) =>{
     return (
         <form className="Add-items">
             
-            <input type="text" onChange ={props.onChange} value = {props.value}/>
-            <button type="button" onClick={()=>props.onClickContactFormButton()}>+ Add Contact</button>
-            {/* <div onClick={props.onClickContactFormButton}> */}
-            {/* add item */}
-            {
-                props.isShowingModal && <ContactForm isShowingModal={props.isShowingModal} action="Add" onCloseDiv={props.onCloseDiv} 
+            <Input focus type="text" onChange ={props.onChange} value = {props.value}/>
+            <ContactFormContainer action="Add" onCloseDiv={props.onCloseDiv} 
                 handleOnClick={handleOnClick}/>
-            }
-            {/* </div> */}
         </form>
     );
 }            
