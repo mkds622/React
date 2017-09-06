@@ -52,8 +52,7 @@ export class ContactFormContainer extends React.Component {
     showAlert = (msg) => {
         this.msg.show(msg, {
           time: 2000,
-          type: 'error',
-          icon: <img src="path/to/some/img/32x32.png" />
+          type: 'error'
         })
     }
     handleOpenModalClick=()=>{

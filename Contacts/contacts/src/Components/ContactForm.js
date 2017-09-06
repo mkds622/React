@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button,Header,Modal,Input,Form,Label,Segment,Message} from 'semantic-ui-react';
+import {Button,Header,Modal,Form,Segment,Message} from 'semantic-ui-react';
 export const ContactForm = (props) =>{
     return(
         <Modal trigger={<Button basic type="button" onClick={props.handleOpenModalClick}>{props.action} Contact</Button>}
-        basic size='small' open={props.open}>
+        basic size='small' >
             <Message hidden={props.messageHidden} negative>
                 <Message.Header>Number should contain exactly 10 digits</Message.Header>    
             </Message>

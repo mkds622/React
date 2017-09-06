@@ -1,6 +1,6 @@
 import React from 'react';
 import {ContactFormContainer} from '../Containers/ContactFormContainer';
-import {Button,Input} from 'semantic-ui-react';
+import {Input} from 'semantic-ui-react';
 
 
 export const Form = (props) =>{
@@ -10,7 +10,7 @@ export const Form = (props) =>{
         <form className="Add-items">
             
             <Input focus type="text" onChange ={props.onChange} value = {props.value}/>
-            <ContactFormContainer action="Add" onCloseDiv={props.onCloseDiv} 
+            <ContactFormContainer action="Add" 
                 handleOnClick={handleOnClick}/>
         </form>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 //import ReactDOM from 'react-dom';
-import {List,SegmentGroup} from 'semantic-ui-react';
+import {SegmentGroup} from 'semantic-ui-react';
 import {ListItemContainer} from '../Containers/ListItemContainer';
 
 export class ListContainer extends React.Component {
@@ -15,7 +15,7 @@ export class ListContainer extends React.Component {
     }
     createList(contactsToDisplay){
         return (
-            <SegmentGroup className='listSegment' divided inverted>
+            <SegmentGroup className='listSegment'>
                
             {contactsToDisplay.map((item,i) => <ListItemContainer key={i} index={i} update ={this.updateItem} delete={this.deleteItem} item={item} />)}
                 

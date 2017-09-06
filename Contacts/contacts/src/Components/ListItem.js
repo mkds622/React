@@ -1,5 +1,5 @@
 import React from 'react';
-import {Header,List,Modal,Button,Segment} from 'semantic-ui-react';
+import {Header,Modal,Button,Segment} from 'semantic-ui-react';
 import {ContactFormContainer} from '../Containers/ContactFormContainer';
 
 
