@@ -1,81 +1,54 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-/*import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();*/
-
-
 import expect from 'expect';
-import {createStore} from 'redux';
+import deepFreeze from 'deep-freeze';
 
-const counter = (state=0,action) => {
-    switch(action.type){
-        case 'INCREMENT':
-            return state+1;
-        case 'DECREMENT':
-            return state-1;
-        default:
-            return state;
-    }   
-    return state;
+const addCounter = (list) => {
+    return [...list,0];
+};
+
+const removeCounter = (list,index) => {
+    return [...list.slice(0,index),...list.slice(index+1)];
 }
 
-// expect( 
-//     counter(0 , {type:'INCREMENT'})
-// ).toEqual(1);
+const incrementCounter = (list,index) => {
+    return [ ...list.slice(0,index),
+            list[index]+1,
+            ...list.slice(index+1)];
+}
 
-// expect( 
-//     counter(1 , {type:'INCREMENT'})
-// ).toEqual(2);
+const testAddCounter = () =>{
+    const listBefore = [];
+    const listAfter = [0];
 
-// expect( 
-//     counter(2 , {type:'DECREMENT'})
-// ).toEqual(1);
+    deepFreeze(listBefore);
 
-// expect( 
-//     counter(1 , {type:'DECREMENT'})
-// ).toEqual(0);
+    expect(
+        addCounter(listBefore)
+    ).toEqual(listAfter);
+};
 
-// console.log("TESTS PASSED");
+const testRemoveCounter = () =>{
+    const listBefore= [0,10,20];
+    const listAfter= [0,20];
 
-//const {createStore} = Redux;
+    deepFreeze(listBefore);
 
-const store = createStore(counter);
+    expect(
+        removeCounter(listBefore,1)
+    ).toEqual(listAfter);
+}
 
-const Counter = ({
-    value,
-    onIncrement,
-    onDecrement}
-) => {return (
-    <div>
-        <h1>{value}</h1>
-        <button onClick ={onIncrement}>+</button>
-        <button onClick ={onDecrement}>-</button>
-    </div>
-);}
-// console.log(store.getState());
+const testIncrementCounter = () => {
+    const listBefore = [0,10,20];
+    const listAfter = [0,11,20];
 
-// store.dispatch ({ type : 'Increment' });
-// console.log(store.getState());
-const render = () => {
-    ReactDOM.render(
-        <Counter 
-            value= {store.getState()}
-            onIncrement = {() =>{
-                store.dispatch({type:'INCREMENT'})
-                }}
-            onDecrement = {() => {
-                store.dispatch({type:'DECREMENT'})
-            }}/>,
-    document.getElementById('root'));
-}; 
+    deepFreeze(listBefore);
 
-store.subscribe(render);
-render();
-// document.addEventListener('click',() =>{
-//     store.dispatch ({ type : 'INCREMENT' })
-// })
+    expect(
+        incrementCounter(listBefore,1)
+    ).toEqual(listAfter);
+}
+
+testAddCounter();
+testRemoveCounter();
+testIncrementCounter();
+console.log("All Tests passed");
