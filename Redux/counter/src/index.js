@@ -1,54 +1,48 @@
-import expect from 'expect';
-import deepFreeze from 'deep-freeze';
 
-const addCounter = (list) => {
-    return [...list,0];
-};
 
-const removeCounter = (list,index) => {
-    return [...list.slice(0,index),...list.slice(index+1)];
-}
+import React from 'react';
+import ReactDOM from 'react-dom';
+import counterReducer from './Reducers/counterReducer.js';
+import {Counter} from './Components/Counter';
+/*import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
 
-const incrementCounter = (list,index) => {
-    return [ ...list.slice(0,index),
-            list[index]+1,
-            ...list.slice(index+1)];
-}
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();*/
 
-const testAddCounter = () =>{
-    const listBefore = [];
-    const listAfter = [0];
 
-    deepFreeze(listBefore);
+import {createStore} from 'redux';
 
-    expect(
-        addCounter(listBefore)
-    ).toEqual(listAfter);
-};
 
-const testRemoveCounter = () =>{
-    const listBefore= [0,10,20];
-    const listAfter= [0,20];
+const store = createStore(counterReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+console.log(store.getState());
 
-    deepFreeze(listBefore);
+const render = () => {
+    ReactDOM.render(
+        <div>
+            {(store.getState()).map((value,index) => 
+                <Counter 
+                    value= {value}
+                    onIncrement = {() =>{
+                        store.dispatch({type:'INCREMENT_COUNTER',
+                                    index: index})
+                    }}
+                    onDecrement = {() => {
+                        store.dispatch({type:'DECREMENT_COUNTER',
+                                    index: index})
+                    }}
+                ></Counter>
+            )}
+            <button onClick = {() =>{store.dispatch({type:'ADD_COUNTER'})}}>Add Counter</button>
+            <button onClick = {() =>{store.dispatch({type:'REMOVE_COUNTER'})}}>Remove Counter</button>
+        </div>,
+    document.getElementById('root'));
+}; 
 
-    expect(
-        removeCounter(listBefore,1)
-    ).toEqual(listAfter);
-}
-
-const testIncrementCounter = () => {
-    const listBefore = [0,10,20];
-    const listAfter = [0,11,20];
-
-    deepFreeze(listBefore);
-
-    expect(
-        incrementCounter(listBefore,1)
-    ).toEqual(listAfter);
-}
-
-testAddCounter();
-testRemoveCounter();
-testIncrementCounter();
-console.log("All Tests passed");
+store.subscribe(render);
+render();
+// document.addEventListener('click',() =>{
+//     store.dispatch ({ type : 'INCREMENT' })
+// })
