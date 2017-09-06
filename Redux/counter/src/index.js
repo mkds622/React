@@ -1,11 +1,14 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import registerServiceWorker from './registerServiceWorker';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-// ReactDOM.render(<App />, document.getElementById('root'));
-// registerServiceWorker();
+/*import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();*/
+
+
 import expect from 'expect';
 import {createStore} from 'redux';
 
@@ -40,18 +43,39 @@ const counter = (state=0,action) => {
 // console.log("TESTS PASSED");
 
 //const {createStore} = Redux;
+
 const store = createStore(counter);
 
+const Counter = ({
+    value,
+    onIncrement,
+    onDecrement}
+) => {return (
+    <div>
+        <h1>{value}</h1>
+        <button onClick ={onIncrement}>+</button>
+        <button onClick ={onDecrement}>-</button>
+    </div>
+);}
 // console.log(store.getState());
 
 // store.dispatch ({ type : 'Increment' });
 // console.log(store.getState());
 const render = () => {
-    document.body.innerText = store.getState();
+    ReactDOM.render(
+        <Counter 
+            value= {store.getState()}
+            onIncrement = {() =>{
+                store.dispatch({type:'INCREMENT'})
+                }}
+            onDecrement = {() => {
+                store.dispatch({type:'DECREMENT'})
+            }}/>,
+    document.getElementById('root'));
 }; 
 
 store.subscribe(render);
 render();
-document.addEventListener('click',() =>{
-    store.dispatch ({ type : 'INCREMENT' })
-})
+// document.addEventListener('click',() =>{
+//     store.dispatch ({ type : 'INCREMENT' })
+// })
