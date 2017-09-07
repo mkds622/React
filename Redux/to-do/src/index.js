@@ -1,7 +1,7 @@
 // import React from 'react';
 // import ReactDOM from 'react-dom';
 // import './index.css';
-import {createStore,combineReducers} from 'redux';
+import {createStore} from 'redux';
 
 
 const todo = (state, action) => {
@@ -49,6 +49,20 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
         default: 
             return state;
     }
+};
+
+//Implementing combineReducers() from scratch
+
+const combineReducers = (reducers) => {
+    return (state = {},action) =>{
+        return Object.keys(reducers).reduce(
+            (nextState,key)=>{
+                nextState[key]= reducers[key](state[key],action);
+                return nextState
+            },
+            {}
+        );
+    };
 };
 
 // const todoApp = (state = {}, action) =>{
