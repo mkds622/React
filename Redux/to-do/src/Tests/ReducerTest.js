@@ -97,4 +97,4 @@ const testToggleToDO = () =>{
 
 testAddTodo();
 testToggleToDO();
-console.log("All Tests Passed!");]
+console.log("All Tests Passed!");
