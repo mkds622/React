@@ -5,7 +5,7 @@ import { createStore, combineReducers } from 'redux';
 //import combineReducers from './Reducers/combineReducers.js';
 import todos from './Reducers/todos.js';
 import visibilityFilter from './Reducers/visibilityFilter.js';
-import {Provider} from 'react-redux';
+import {Provider,connect} from 'react-redux';
 const Link = ({ active, children, onClick }) => {
     if (active) {
         return <span>{children}</span>;
@@ -74,40 +74,32 @@ const TodoList = ({
         </ul>
     );
 
-class VisibleTodoList extends React.Component{
-    componentDidMount(){
-        const {store} = this.context;
-        this.unsubscribe=store.subscribe(()=>this.forceUpdate());
+const mapStateToTodoListProps = (state) =>{
+    return {
+        todos:getVisibleTodos(
+            state.todos,
+            state.visibilityFilter
+        )
     }
-    componentWillUnmount(){
-        this.unsubscribe();
-    }
-    render() {
-        const props = this.props;
-        const {store} = this.context;
-        const state = store.getState();
-        
-        return (
-            <TodoList
-            todos={
-                getVisibleTodos(
-                    state.todos,
-                    state.visibilityFilter
-                )
-            }
-            onTodoClick={id =>
-                store.dispatch({
-                    type: 'TOGGLE_TODO',
-                    id
-                })
-            } />
-        );
+};
+const mapDispatchToTodoListProps = (dispatch) => {
+    return {
+        onTodoClick:(id) =>
+        dispatch({ 
+            type: 'TOGGLE_TODO',
+            id
+        })
     }
 }
-VisibleTodoList.contextTypes = {
-    store : React.PropTypes.Object
-}
-const AddTodo = (props, {store}) => {
+const VisibleTodoList = connect (
+    mapStateToTodoListProps,
+    mapDispatchToTodoListProps
+)(TodoList);
+
+
+
+
+let AddTodo = ({dispatch}) => {
 
     let input;
     return (<div>
@@ -115,7 +107,7 @@ const AddTodo = (props, {store}) => {
             input = node;
         }} />
         <button onClick={() => {
-            store.dispatch({
+            dispatch({
                         type: 'ADD_TODO',
                         text:input.value,
                         id: nextToDoID++
@@ -124,9 +116,7 @@ const AddTodo = (props, {store}) => {
         }}> Add Todo </button>
     </div>);
 };
-AddTodo.contextTypes = {
-    store : React.PropTypes.Object
-}
+AddTodo= connect()(AddTodo);
 const todoApp = combineReducers({
     todos,
     visibilityFilter
