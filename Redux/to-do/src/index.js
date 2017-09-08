@@ -69,7 +69,7 @@ const TodoList = ({
         </ul>
     );
 
-class VisibleTodoList extends Component{
+class VisibleTodoList extends React.Component{
     componentDidMount(){
         this.unsubscribe=store.subscribe(()=>this.forceUpdate());
     }
