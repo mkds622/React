@@ -5,7 +5,7 @@ import { createStore, combineReducers } from 'redux';
 //import combineReducers from './Reducers/combineReducers.js';
 import todos from './Reducers/todos.js';
 import visibilityFilter from './Reducers/visibilityFilter.js';
-
+import {Provider} from 'react-redux';
 const Link = ({ active, children, onClick }) => {
     if (active) {
         return <span>{children}</span>;
@@ -29,7 +29,7 @@ class FilterLink extends React.Component {
     }
     render() {
         const props=this.props;
-        const {store} =props;
+        const {store} = this.context;
         const state = store.getState();
 
         return (
@@ -172,20 +172,20 @@ const ToDoApp = ({}) => (
 // const store = createStore(todoApp,
 //     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-class Provider extends React.Component {
-    getChildContext(){
-        return {
-            store:this.props.store
-        };
-    }
-    render() {
-       this.props.children;
-    }
-}
+// class Provider extends React.Component {
+//     getChildContext(){
+//         return {
+//             store:this.props.store
+//         };
+//     }
+//     render() {
+//        this.props.children;
+//     }
+// }
 
-Provider.childContextTypes = {
-    store : React.PropTypes.object
-}
+// Provider.childContextTypes = {
+//     store : React.PropTypes.object
+// } 
 ReactDOM.render(
     <Provider store = {createStore(todoApp,
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
