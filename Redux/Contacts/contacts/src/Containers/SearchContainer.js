@@ -1,56 +1,59 @@
 import React from 'react';
 
 import {SearchComponent} from '../Components/SearchComponent';
+import addContact from '../ActionProviders/AddContact';
+import PropTypes from 'prop-types';
 
 export class SearchContainer extends React.Component {
     constructor(props){
         super(props);
         this.state={ userInput : '',
-                       contacts : [] ,
                         filteredContacts: [],
                         
                         };
+        
         this.handleUserInput = this.handleUserInput.bind(this);
-        this.addContact=this.addContact.bind(this);
         //this.handleClick = this.handleClick.bind(this);
     }
+    componentDidMount(){
+        const {store} = this.context;
+        this.unsubscribe=store.subscribe(()=>this.forceUpdate());
+    }
+    componentWillUnmount(){
+        this.unsubscribe();
+    }
     componentWillMount(){
+        const {store} = this.context;
          const contactsList = JSON.parse(localStorage.getItem('Contacts')|| "[]") ;
          if(contactsList){
-         this.setState( {contacts: contactsList,
-                        filteredContacts:contactsList});
+            contactsList.forEach(contact => store.dispatch( addContact(contact)));
+         this.setState( {
+                        filteredContacts: store.getState()});
          }
+
     }
     render(){
+        
         return (<SearchComponent value = {this.state.userInput} onChange={this.handleUserInput} 
-        contactsList ={this.state.filteredContacts} allContacts={this.state.contacts} onClickAdd={this.addContact}/>);
+        contactsList ={this.state.filteredContacts} />);
     }
     handleUserInput(e){
-        // console.log(e);
-        // const filteredContacts = this.state.contacts; 
-        // if(filteredContacts){
-        //     //filter contacts according to input
-        //     console.log(this.state.contacts);
-        // }
+        const {store} = this.context;
         let filteredContacts =[];
-        const contacts = this.state.contacts;
-        contacts.forEach(contact => {
+        const contacts = store.getState(); 
+        filteredContacts = contacts.filter(contact => {
             if(contact.name.toLowerCase().indexOf(e.target.value.toLowerCase())>= 0){
-                filteredContacts.push(contact);
+                return contact;
             }
         })
         this.setState({
           userInput: e.target.value,
           filteredContacts: filteredContacts
         });
-    }  
-    addContact(item){
-        const contacts=this.state.contacts;
-        contacts.push(item);
-        localStorage.setItem('Contacts',JSON.stringify(contacts));
-        this.setState({
-            contacts:contacts
-        });
     }
+    static contextTypes = {
+        store: PropTypes.object.isRequired
+    }  
+    
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Button,Header,Modal,Form,Segment,Message} from 'semantic-ui-react';
 export const ContactForm = (props) =>{
     return(
-        <Modal trigger={<Button basic type="button" onClick={props.handleOpenModalClick}>{props.action} Contact</Button>}
+        <Modal trigger={<Button basic type="button" open= {props.open} onClose={props.} >{props.action} Contact</Button>}
         basic size='small' >
             <Message hidden={props.messageHidden} negative>
                 <Message.Header>Number should contain exactly 10 digits</Message.Header>    

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ContactForm} from '../Components/ContactForm';
-
+import PropTypes from 'prop-types';
 
 
 export class ContactFormContainer extends React.Component {
@@ -11,6 +11,13 @@ export class ContactFormContainer extends React.Component {
         };
         this.performAction=this.performAction.bind(this);
         //this.submitFormButtonClick=this.submitFormButtonClick.bind(this);
+    }
+    componentDidMount(){
+        const {store} = this.context;
+        this.unsubscribe=store.subscribe(()=>this.forceUpdate());
+    }
+    componentWillUnmount(){
+        this.unsubscribe();
     }
     handleNameChange=(e)=>{
         this.setState({
@@ -33,10 +40,12 @@ export class ContactFormContainer extends React.Component {
         if(item.number.match(/^\d{10}$/) === null){
             this.setState({messageHidden:false});
         }else{
-            this.props.handleOnClick(item,this.props.action);
             this.setState({
                 open:false
             });
+            debugger;
+            this.props.handleOnClick(item,this.props.action);
+            
         }
         
     }
@@ -60,6 +69,11 @@ export class ContactFormContainer extends React.Component {
             open:true
         });
     }
+    handleCloseModalClick=()=>{
+        this.setState({
+            open:false
+        });
+    }
     render(){
     return (
         <ContactForm    messageHidden={this.state.messageHidden}
@@ -70,4 +84,7 @@ export class ContactFormContainer extends React.Component {
                         itemNumber={this.props.itemNumber} handleNumberChange={this.handleNumberChange}/>
     )
 }
+static contextTypes = {
+    store: PropTypes.object.isRequired
+}  
 }

@@ -4,7 +4,7 @@ import {SearchContainer} from '../Containers/SearchContainer';
 import {Header} from 'semantic-ui-react';
 
 
-export const AppComponent = () => {
+export const AppComponent = (props,{store}) => {
     console.log("AppComponent")
     return (
     < div className = "App" > 

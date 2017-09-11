@@ -8,8 +8,8 @@ export const SearchComponent = (props) => {
     return (
         <div style={{display: "inline-block",padding:"20px 0px"}}>
             <Header content="Search" size="large" />
-            <FormContainer onChange ={props.onChange} value = {props.value}  onClickAdd={props.onClickAdd}/>
-            <ListContainer contactsToDisplay={props.contactsList} allContacts={props.allContacts}/>
+            <FormContainer onChange ={props.onChange} value = {props.value}  />
+            <ListContainer contactsToDisplay={props.contactsList} />
         </div>
     );
 }
